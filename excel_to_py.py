@@ -1,11 +1,11 @@
 from openpyxl import Workbook
 from openpyxl import load_workbook
 
-file = 'Estimating Model-current 2.8.21.xlsm' #input('whats the excelfile name? (.xlsm)')
+file = input('whats the excelfile name? (.xlsm)') #'Estimating Model-current 2.8.21.xlsm'
 
 workbook = load_workbook(filename=file)
 
-note_sheet = workbook['Notes']
+note_sheet = workbook['Write up']
 
 estimate = []
 
