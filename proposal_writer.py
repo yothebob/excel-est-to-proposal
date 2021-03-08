@@ -23,12 +23,6 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
     print('start making proposal...')
 
     # Document Variables
-    #customer_name = input('customer rep name?\n :')
-    #customer_company =input('customer company name?\n :')
-    #contact_info =input('customer contact info?\n :')
-    #company_address =input('customer Business address?\n :')
-    #job_address = input('job site address?\n :')
-    #job_name = input('Job name?\n :')
     today = date.today()
     d1 = today.strftime("%m/%d/%Y")
     subtotal = 0
@@ -41,11 +35,11 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
     font.name = 'Times New Roman'
     font.size = Pt(12)
 
+    #margin setup
     paragraph_format = style.paragraph_format
     paragraph_format.space_before = Pt(3.4)
     paragraph_format.space_after = Pt(0)
     sections = document.sections
-    
     for section in sections:
         section.top_margin = Inches(.5)
         section.bottom_margin = Inches(.4)
@@ -89,10 +83,8 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
     #sections
     for num in range(len(_bid_lf)):
         bid_area = input('what is this section called? \n: ')
-        #b1_height,b1_post,b1_mount,b1_top,b1_bottom,b1_infill,b1_space,b1_type = rd.get_description()
         section = etp.return_section_details(num)
         b1 = rd.return_description(section[0],section[1],section[2],section[3],section[4],section[5],section[6],section[7]) 
-        #b1 = rd.return_description(b1_height,b1_post,b1_mount,b1_top,b1_bottom,b1_infill,b1_space,b1_type)
         p1.add_run('Bid Item - {} Tall {} ({})\n'.format(b1[0],b1[7],bid_area)).bold = True
         p1.add_run(" {} {}. {}, {} with {}. Posts spacing to be evenly spaced and not exceed {} per engineering and customer request. Support blocking by others. Standard color(Black, Bronze, White). ".format(b1[1],b1[2],b1[3],b1[4],b1[5],b1[6]))    
         if b1[7] == 'Grab rail':

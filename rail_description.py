@@ -12,7 +12,7 @@ top_rail = ['Top rail profile 200', 'Top rail profile 375','Top rail profile 400
 bottom_rail = [' bottom rail profile 200',' with CR Laurence SS cladding','bottom rail profile 100','bottom rail profile 500','to be mounted directly to walls at stairs','to be mounted directly to aluminum posts at stairs',
                'to be mounted directly into core hole pockets','to be mounted directly to surface','custom']
 
-infill = ['5/8" x 5/8" picket infill','1/4 laminated Tempered glass infill','3/8 laminated Tempered glass infill','1/2 laminated Tempered glass infill','9/16 laminated Tempered glass infill','quikset grout',
+infill = ['5/8" x 5/8" picket infill','1/4 laminated Tempered glass infill','3/8 laminated Tempered glass infill','1/2 laminated Tempered glass infill','9/16 laminated Tempered glass infill','1/8" SS Cable Infill','3/16" SS Cable infill','quikset grout',
           '4"x4" aluminum baseplate','decorative grabrail brackets','custom']
 
 spacing = ['',"2'","3'","4'","5'","6'",'custom']
@@ -72,14 +72,38 @@ def get_description():
 
 def return_description(set_height,set_post,set_mount,set_top,set_bottom,set_infill,set_spacing,set_type):
     rail_description = []
+    if rail_height[set_height] == 'custom':
+        rail_height[set_height] = input(': ')
     rail_description.append(rail_height[set_height])
+        
+    if post_type[set_post] == 'custom':
+        post_type[set_post] = input(': ')
     rail_description.append(post_type[set_post])
+        
+    if mounting_detail[set_mount] == 'custom':
+        mounting_detail[set_mount] = input(': ')
     rail_description.append(mounting_detail[set_mount])
+        
+    if top_rail[set_top] == 'custom':
+        top_rail[set_top] = input(': ')   
     rail_description.append(top_rail[set_top])
+        
+    if bottom_rail[set_bottom] == 'custom':
+        bottom_rail[set_bottom] = input(': ')
     rail_description.append(bottom_rail[set_bottom])
+  
+    if infill[set_infill] == 'custom':
+        infill[set_infill] = input(': ')   
     rail_description.append(infill[set_infill])
+        
+    if spacing[set_spacing] == 'custom':
+        spacing[set_spacing] = input(': ')    
     rail_description.append(spacing[set_spacing])
+        
+    if rail_type[set_type] == 'custom':
+        rail_type[set_type] = input(': ')   
     rail_description.append(rail_type[set_type])
+        
     return rail_description
 
 

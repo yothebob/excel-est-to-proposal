@@ -1,13 +1,27 @@
 from openpyxl import Workbook
 from openpyxl import load_workbook
+import re
+
 
 file = input('whats the excelfile name? (.xlsm)') #'Estimating Model-current 2.8.21.xlsm'
 
-workbook = load_workbook(filename=file)
+workbook = load_workbook(filename=file,data_only=True)
 
+estimate_total_sheet = workbook['Estimate Total']
+project_materials_sheet =workbook['Project Materials']
+area_a_sheet = workbook['Area A']
+area_b_sheet =workbook['Area B']
+area_c_sheet = workbook['Area C']
+area_d_sheet = workbook['Area D']
+grab_rail_sheet = workbook['Grab Rail']
+project_labor_sheet = workbook['Project Labor']
+take_off_sheet = workbook['Take Off']
+item_list_sheet = workbook['Item List']
+grab_rail_item_sheet = workbook['Grab Rail Item List']
 note_sheet = workbook['Write up']
 
 estimate = []
+
 
 def return_variables():
     for row in note_sheet.iter_rows(min_row=1,min_col=2,max_col=2,values_only=True):
@@ -19,8 +33,9 @@ def return_lf():
     section_lf= []
     for row in note_sheet.iter_rows(min_row=2,min_col=4,max_col=4,values_only=True):
         res = ''.join(map(str,row))
-        if res != 'None':
-            section_lf.append(int(res))
+        if res != "None":
+            if res != "0":
+                section_lf.append(int(res))
     return section_lf
 
 def return_lfprice():
@@ -28,7 +43,8 @@ def return_lfprice():
     for row in note_sheet.iter_rows(min_row=2,min_col=5,max_col=5,values_only=True):
         res = ''.join(map(str,row))
         if res != 'None':
-            section_lfprice.append(int(res))
+            if res != '0':
+                section_lfprice.append(int(res))
     return section_lfprice
 
 def return_section_details(num=0):
