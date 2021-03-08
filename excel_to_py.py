@@ -3,7 +3,9 @@ from openpyxl import load_workbook
 import re
 
 
-file = input('whats the excelfile name? (.xlsm)') #'Estimating Model-current 2.8.21.xlsm'
+file = input('whats the excelfile name?(.xlsm) type "default" for est model') #'Autowrite excel model1.0.xlsm'
+if file == 'default':
+    file = 'Autowrite excel model1.0.xlsm'
 
 workbook = load_workbook(filename=file,data_only=True)
 
