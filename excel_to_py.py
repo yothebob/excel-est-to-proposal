@@ -3,9 +3,9 @@ from openpyxl import load_workbook
 import re
 
 
-file = input('whats the excelfile name?(.xlsm) type "default" for est model') #'Autowrite excel model1.0.xlsm'
+file = input('whats the excelfile name?(.xlsm) type "default" for est model')
 if file == 'default':
-    file = 'Autowrite excel model1.0.xlsm'
+    file = 'Autowrite excel model1.0.5.xlsm'
 
 workbook = load_workbook(filename=file,data_only=True)
 
@@ -57,6 +57,17 @@ def return_section_details(num=0):
             if res != 'None':
                 section.append(int(res))
     return section
+
+def return_area_name(num=0):
+    area_names = ''
+    for row in note_sheet.iter_rows(min_row=(2+num),max_row=(2+num),min_col=3,max_col=3,values_only=True):
+        print(row)
+        res = ''.join(map(str,row))
+        if res != 'None':
+            area_name = str(res)
+            return area_name
+        else:
+            return 'None'
 
 #print(return_variables())
 #return_lf()

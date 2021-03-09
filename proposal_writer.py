@@ -82,7 +82,7 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
 
     #sections
     for num in range(len(_bid_lf)):
-        bid_area = input('what is this section called? \n: ')
+        bid_area = etp.return_area_name(num)
         section = etp.return_section_details(num)
         b1 = rd.return_description(section[0],section[1],section[2],section[3],section[4],section[5],section[6],section[7]) 
         p1.add_run('Bid Item - {} Tall {} ({})\n'.format(b1[0],b1[7],bid_area)).bold = True
