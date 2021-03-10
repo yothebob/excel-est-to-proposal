@@ -5,7 +5,7 @@ post_type = ['2-1/2 x 4" Base shoe','2-3/8" x 2-3/8" square aluminum posts', '2-
 
 mounting_detail = ["fascia mounted to front of deck framing using PRO's Fascia brackets", 'fascia mounted to front of deck framing using steel angle iron (angle iron installed by others)',
                     'mounted directly to deck framing using engineered lags','mounted to top of deck surface using rubber gasket and 5x5 baseplate','fascia mounted to welded knife plates (knife plates by others)',
-                   'fascia mounted to angle aluminum brakets attached to halfens','1 line', '2 line','3 line','custom']
+                   'fascia mounted to angle aluminum brakets attached to halfens','mounted to stringer using 3" x 8" slotted angle base plate','1 line', '2 line','3 line','custom']
 
 top_rail = ['Top rail profile 200', 'Top rail profile 375','Top rail profile 400','CL Laurence 1" x 1-5/16" SS  Top rail Profile','No top rail','core mounted grabrail','baseplate mounted grabrail','wall mounted grabrail','custom']
 

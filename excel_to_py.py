@@ -5,7 +5,7 @@ import re
 
 file = input('whats the excelfile name?(.xlsm) type "default" for est model')
 if file == 'default':
-    file = 'Autowrite excel model1.0.5.xlsm'
+    file = 'Autowrite excel model1.0.6.xlsm'
 
 workbook = load_workbook(filename=file,data_only=True)
 
@@ -69,8 +69,14 @@ def return_area_name(num=0):
         else:
             return 'None'
 
-#print(return_variables())
-#return_lf()
-#return_lfprice()
-#return_section_details(4)
+def return_rep():
+    for row in note_sheet.iter_rows(min_row=13,max_row=13,min_col=2,max_col=2,values_only=True):
+        rep = ''.join(map(str,row))
+        if rep.lower() == 'jag':
+            return 'jag'
+        elif rep.lower() == 'dave':
+            return 'dave'
+        else:
+            return 'jag'
+    
 
