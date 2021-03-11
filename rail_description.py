@@ -9,7 +9,7 @@ mounting_detail = ["fascia mounted to front of deck framing using PRO's Fascia b
 
 top_rail = ['Top rail profile 200', 'Top rail profile 375','Top rail profile 400','CL Laurence 1" x 1-5/16" SS  Top rail Profile','No top rail','core mounted grabrail','baseplate mounted grabrail','wall mounted grabrail','custom']
 
-bottom_rail = [' bottom rail profile 200',' with CR Laurence SS cladding','bottom rail profile 100','bottom rail profile 500','Without a Bottom rail','to be mounted directly to walls at stairs','to be mounted directly to aluminum posts at stairs',
+bottom_rail = ['bottom rail profile 200','with CR Laurence SS cladding','bottom rail profile 100','bottom rail profile 500','Without a Bottom rail','to be mounted directly to walls at stairs','to be mounted directly to aluminum posts at stairs',
                'to be mounted directly into core hole pockets','to be mounted directly to surface','custom']
 
 infill = ['5/8" x 5/8" picket infill','1/4 laminated Tempered glass infill','3/8 laminated Tempered glass infill','1/2 laminated Tempered glass infill','9/16 laminated Tempered glass infill','1/8" SS Cable Infill','3/16" SS Cable infill','quikset grout',

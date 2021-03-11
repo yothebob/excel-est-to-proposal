@@ -37,7 +37,7 @@ def return_lf():
         res = ''.join(map(str,row))
         if res != "None":
             if res != "0":
-                section_lf.append(int(res))
+                section_lf.append(float(res))
     return section_lf
 
 def return_lfprice():
@@ -46,7 +46,7 @@ def return_lfprice():
         res = ''.join(map(str,row))
         if res != 'None':
             if res != '0':
-                section_lfprice.append(int(res))
+                section_lfprice.append(float(res))
     return section_lfprice
 
 def return_section_details(num=0):

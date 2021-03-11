@@ -7,16 +7,6 @@ import excel_to_py as etp
 
 
 print('proposal writer loaded...')
-def menu():
-    enter = input('make proposal? (y/n): ')
-    if enter.lower() == 'y':
-        write_proposal([40],[60])
-    elif enter.lower() == 'n':
-        sys.exit()
-    else:
-        print('please try again')
-        menu()
-
 
 
 def write_proposal(customer_name,customer_company,contact_info,company_address,job_address,job_name,_bid_lf,_bid_lfprice):
@@ -72,7 +62,7 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
 
     # start Document
     est =document.add_paragraph()
-    est.add_run('\t'*11 + 'Est #: {}C'.format(estimate_number)).bold=True
+    est.add_run('\t'*11 + 'Est #: {}-C'.format(estimate_number)).bold=True
     est_num = open('estimate_number.txt','w+')
     est_num.write(str(estimate_number + 1))
     est_num.close()
@@ -89,7 +79,7 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
     p1.add_run(job_name + ', BUDGET Rev-0 \n\n').bold = True
     p1.add_run('Items furnished by Precision Rail of Oregon: Submittal drawings, engineering, materials, and installation.\n\n').bold = True
     p1.add_run('Submittals:').bold = True
-    p1.add_run(' Pricing includes 1 submittal based off plans and 1 revision once corrections are recieved from GC. Any Additional revisions to be billed at 145.00 per hour plus materials and handling. \n\n')
+    p1.add_run(' Pricing includes 1 submittal based off plans and 1 revision once corrections are received from GC. Any Additional revisions to be billed at 145.00 per hour plus materials and handling. \n\n')
 
     #sections
     for num in range(len(_bid_lf)):
@@ -97,15 +87,16 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
         section = etp.return_section_details(num)
         b1 = rd.return_description(section[0],section[1],section[2],section[3],section[4],section[5],section[6],section[7]) 
         p1.add_run('Bid Item - {} Tall {} ({})\n'.format(b1[0],b1[7],bid_area)).bold = True
-        p1.add_run(" {} {}. {}, {} with {}. Posts spacing to be evenly spaced and not exceed {} per engineering and customer request. Support blocking by others. Standard color(Black, Bronze, White). ".format(b1[1],b1[2],b1[3],b1[4],b1[5],b1[6]))    
+        p1.add_run(" {} {}. {}, {} with {}. Posts spacing to be evenly spaced and not exceed {} per engineering and customer request. Support blocking by others. Standard color (Black, Bronze, White). ".format(b1[1],b1[2],b1[3],b1[4],b1[5],b1[6]))    
         if b1[7] == 'Grab rail':
             p1.add_run('Handrails are all ADA Compliant.')
         p1.add_run('\n\n')
-        p1.add_run('\t'*7 + ' Total {} LF @ ${}.00 per LF = ${}.00*\n\n\n'.format(str(_bid_lf[num]),str(_bid_lfprice[num]),str(_bid_lf[num]*_bid_lfprice[num]))).bold = True
+        p1.add_run('\t'*6 + 'Sub Total {} LF @ ${}.00 per LF = ${}.00*\n\n\n'.format(str(_bid_lf[num]),str(_bid_lfprice[num]),str(_bid_lf[num]*_bid_lfprice[num]))).bold = True
         subtotal += _bid_lf[num] * _bid_lfprice[num]
         
     p1.add_run('\n'*3)
-    p1.add_run('\t'*10 + 'Sub Total = {}.00*\n\n\n'.format(str(subtotal))).bold = True
+    p1.add_run('\t'*10 + '  Total = {}.00*\n\n\n'.format(str(subtotal))).bold = True
+
     
     p1.add_run('\t\t*This price quote is valid for 3 months from the date of this document*\n\n').italic = True
 
