@@ -1,7 +1,7 @@
 from openpyxl import Workbook
 from openpyxl import load_workbook
 import re
-
+print('excel to py file loaded...')
 
 file = input('whats the excelfile name?(.xlsm) type "default" for est model')
 if file == 'default':
@@ -37,7 +37,8 @@ def return_lf():
         res = ''.join(map(str,row))
         if res != "None":
             if res != "0":
-                section_lf.append(float(res))
+                res = round(float(res),0)
+                section_lf.append(int(res))
     return section_lf
 
 def return_lfprice():
@@ -46,7 +47,8 @@ def return_lfprice():
         res = ''.join(map(str,row))
         if res != 'None':
             if res != '0':
-                section_lfprice.append(float(res))
+                res = round(float(res),0)
+                section_lfprice.append(int(res))
     return section_lfprice
 
 def return_section_details(num=0):

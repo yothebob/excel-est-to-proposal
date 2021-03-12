@@ -1,4 +1,4 @@
-
+print('rail description loaded...')
 
 rail_height = ['36"','42"','34"-38"','custom']
 post_type = ['2-1/2 x 4" Base shoe','2-3/8" x 2-3/8" square aluminum posts', '2-3/8" x 2-3/8" Series 500 aluminum slotted Post','1.5" Sch 40','1.5" x 1.5" Square','1" x 2" Rectangular','custom' ]
