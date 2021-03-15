@@ -5,7 +5,7 @@ print('excel to py file loaded...')
 
 file = input('whats the excelfile name?(.xlsm) type "default" for est model')
 if file == 'default':
-    file = 'Autowrite excel model1.0.6.xlsm'
+    file = 'Autowrite excel model1.0.7.xlsm'
 
 workbook = load_workbook(filename=file,data_only=True)
 

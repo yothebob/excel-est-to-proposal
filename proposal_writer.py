@@ -59,12 +59,12 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
 
     # start Document
     est =document.add_paragraph()
-    est.add_run('\t'*11 + 'Est #: {}-C'.format(estimate_number)).bold=True
+    est.add_run('\t'*10 + 'Estimate #: {}-C'.format(estimate_number)).bold=True
     est_num = open('estimate_number.txt','w+')
     est_num.write(str(estimate_number + 1))
     est_num.close()
     
-    
+    #head_info = document.add_paragraph()
     for item in total_info:
         document.add_paragraph(str(item))
     document.add_paragraph('')
@@ -84,7 +84,7 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
         section = etp.return_section_details(num)
         b1 = rd.return_description(section[0],section[1],section[2],section[3],section[4],section[5],section[6],section[7]) 
         p1.add_run('Bid Item - {} Tall {} ({})\n'.format(b1[0],b1[7],bid_area)).bold = True
-        p1.add_run(" {} {}. {}, {} with {}. Posts spacing to be evenly spaced and not exceed {} per engineering and customer request. Support blocking by others. Standard color (Black, Bronze, White). ".format(b1[1],b1[2],b1[3],b1[4],b1[5],b1[6]))    
+        p1.add_run(" {} {}. {}, {} with {}. Posts spacing to be evenly spaced and not exceed {} as per engineering and customer request. Support blocking by others. Standard color (Black, Bronze, White). ".format(b1[1],b1[2],b1[3],b1[4],b1[5],b1[6]))    
         if b1[7] == 'Grab rail':
             p1.add_run('Handrails are all ADA Compliant.')
         p1.add_run('\n\n')
@@ -154,7 +154,7 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
     sign.add_run('\n\n\n\n')
     sign.add_run('Acceptance of Proposal Signature _______________________              Date_______________   ')
 
-    document.save('{} - rev 0.docx'.format(job_name))
+    document.save('{}_{} - rev 0.docx'.format(customer_company,job_name))
     print('proposal finished!')
 
 print('proposal writer loaded...')
