@@ -3,7 +3,7 @@ from openpyxl import load_workbook
 import re
 print('excel to py file loaded...')
 
-file = input('whats the excelfile name?(.xlsm) type "default" for est model')
+file = input('whats the excelfile name?(.xlsm) type "default" for est model\n:')
 if file == 'default':
     file = 'Autowrite excel model1.0.7.xlsm'
 
@@ -33,22 +33,24 @@ def return_variables():
 
 def return_lf():
     section_lf= []
-    for row in note_sheet.iter_rows(min_row=2,min_col=4,max_col=4,values_only=True):
+    for row in note_sheet.iter_rows(min_row=2,max_row=6,min_col=4,max_col=4,values_only=True):
         res = ''.join(map(str,row))
         if res != "None":
             if res != "0":
                 res = round(float(res),0)
                 section_lf.append(int(res))
+                
     return section_lf
 
 def return_lfprice():
     section_lfprice= []
-    for row in note_sheet.iter_rows(min_row=2,min_col=5,max_col=5,values_only=True):
+    for row in note_sheet.iter_rows(min_row=2,max_row=6,min_col=5,max_col=5,values_only=True):
         res = ''.join(map(str,row))
         if res != 'None':
             if res != '0':
                 res = round(float(res),0)
                 section_lfprice.append(int(res))
+            
     return section_lfprice
 
 def return_section_details(num=0):
