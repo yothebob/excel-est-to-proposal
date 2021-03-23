@@ -39,6 +39,8 @@ def return_lf():
             if res != "0":
                 res = round(float(res),0)
                 section_lf.append(int(res))
+            else:
+                section_lf.append('NA')
                 
     return section_lf
 
@@ -50,6 +52,8 @@ def return_lfprice():
             if res != '0':
                 res = round(float(res),0)
                 section_lfprice.append(int(res))
+            else:
+                section_lfprice.append('NA')
             
     return section_lfprice
 
@@ -83,4 +87,7 @@ def return_rep():
         else:
             return 'jag'
     
+#def return_grabrail():
+#    for price in note_sheet.iter_rows()
+
 
