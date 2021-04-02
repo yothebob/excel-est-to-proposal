@@ -349,8 +349,10 @@ def get_cwd():
     return cwd
 
 window = Tk()
-open_button = Button(master=window,text='Open File',command=file_name)
-run_button =Button(master=window,text='Make Proposal',command=_start)
-run_button.pack()
+window.title(' Auto Proposal Writer')
+window.geometry('300x100')
+open_button = Button(master=window,width=20,text='Open File',command=file_name)
+run_button =Button(master=window,width=20,text='Make Proposal',command=_start)
 open_button.pack()
+run_button.pack()
 window.mainloop()
