@@ -1,28 +1,28 @@
 from openpyxl import Workbook
 from openpyxl import load_workbook
 import re
+
 print('excel to py file loaded...')
 
-file = input('whats the excelfile name?(.xlsm) type "default" for est model\n:')
-if file == 'default':
-    file = 'Autowrite excel model1.0.7.xlsm'
+file = ''
+def set_file(_file):
+    workbook = load_workbook(filename=_file,data_only=True)
 
-workbook = load_workbook(filename=file,data_only=True)
+    estimate_total_sheet = workbook['Estimate Total']
+    project_materials_sheet =workbook['Project Materials']
+    area_a_sheet = workbook['Area A']
+    area_b_sheet =workbook['Area B']
+    area_c_sheet = workbook['Area C']
+    area_d_sheet = workbook['Area D']
+    grab_rail_sheet = workbook['Grab Rail']
+    project_labor_sheet = workbook['Project Labor']
+    take_off_sheet = workbook['Take Off']
+    item_list_sheet = workbook['Item List']
+    grab_rail_item_sheet = workbook['Grab Rail Item List']
+    note_sheet = workbook['Write up']
 
-estimate_total_sheet = workbook['Estimate Total']
-project_materials_sheet =workbook['Project Materials']
-area_a_sheet = workbook['Area A']
-area_b_sheet =workbook['Area B']
-area_c_sheet = workbook['Area C']
-area_d_sheet = workbook['Area D']
-grab_rail_sheet = workbook['Grab Rail']
-project_labor_sheet = workbook['Project Labor']
-take_off_sheet = workbook['Take Off']
-item_list_sheet = workbook['Item List']
-grab_rail_item_sheet = workbook['Grab Rail Item List']
-note_sheet = workbook['Write up']
+    estimate = []
 
-estimate = []
 
 
 def return_variables():
