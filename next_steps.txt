@@ -1,0 +1,3 @@
+future upgrades for proposal writer:
+- custom enters are saved to a file/server?
+- set up dave to use proposal writer
