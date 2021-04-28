@@ -13,6 +13,9 @@ import re
 
 print('excel to py file loaded...')
 
+
+sys.path.append('C:/Users/Owner/Desktop/Estimating model 1.0.7.9')
+
 file = ''
 def set_file(_file):
     global file
@@ -319,29 +322,30 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
    
     sign.add_run('\n\n\n\n')
     sign.add_run('Acceptance of Proposal Signature _______________________              Date_______________   ')
-    cwd = get_cwd()
-    document.save(str(cwd)+'{}_{} - rev 0.docx'.format(customer_company,job_name))
+    document.save('{}_{} - rev 0.docx'.format(customer_company,job_name))
     print('proposal finished!')
 
 
     
 def _start():
     print('proposal writer loaded...')
+    os.chdir("C:/Users/Owner/Desktop/Estimating model 1.0.7.9")
+    print(os.getcwd())
     etp = Excel_to_py(file,load_workbook(filename=file,data_only=True),'Write up')
     customer_name,customer_company,contact_info,company_address,job_address,job_name = etp.return_variables()
     bid_lf = etp.return_lf()
     bid_lfprice = etp.return_lfprice()
-
+    
     write_proposal(customer_name,customer_company,contact_info,company_address,job_address,job_name,bid_lf,bid_lfprice)
 
 
 
 def file_name():
+    print(os.getcwd())
     _path = askopenfilename(filetypes=[('Excel Files','*.xlsm')])
     print(_path)
     set_file(_path)
-    return cwd
-
+    
 
 
 def get_cwd():
