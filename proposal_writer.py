@@ -52,62 +52,62 @@ def return_description(set_height,set_post,set_mount,set_top,set_bottom,set_infi
         rail_description.append(custom_height)
     else:
         rail_description.append(rail_height[set_height])
-        
+
     if post_type[set_post] == 'custom':
         custom_post = input('post type: ')
         rail_description.append(custom_post)
     else:
         rail_description.append(post_type[set_post])
-        
+
     if mounting_detail[set_mount] == 'custom':
         custom_mount = input('mount/ GR line: ')
         rail_description.append(custom_mount)
     else:
         rail_description.append(mounting_detail[set_mount])
-        
+
     if top_rail[set_top] == 'custom':
         custom_top = input('TR / GR mount: ')
         rail_description.append(custom_top)
     else:
         rail_description.append(top_rail[set_top])
-        
+
     if bottom_rail[set_bottom] == 'custom':
         custom_bottom = input('BR/ GR mount: ')
         rail_description.append(custom_bottom)
     else:
         rail_description.append(bottom_rail[set_bottom])
-  
+
     if infill[set_infill] == 'custom':
         custom_infill = input('infill / GR mount spec: ')
         rail_description.append(custom_infill)
     else:
         rail_description.append(infill[set_infill])
-        
+
     if spacing[set_spacing] == 'custom':
         custom_spacing = input('spacing: ')
         rail_description.append(custom_spacing)
     else:
         rail_description.append(spacing[set_spacing])
-        
+
     if rail_type[set_type] == 'custom':
         custom_type = input('rail type: ')
         rail_description.append(custom_type)
-    else: 
+    else:
         rail_description.append(rail_type[set_type])
-        
+
     return rail_description
 
 
 
 
 class Excel_to_py:
-    
+
     def __init__(self,file,workbook,note_sheet):
         self.file = file
         self.workbook = workbook#load_workbook(filename=file,data_only=True)
         note_sheet = workbook[note_sheet]
         self.note_sheet = note_sheet#workbook['Write up']
-        
+
     def return_variables(self):
         #workbook = load_workbook(filename=file,data_only=True)
         #note_sheet = workbook['Write up']
@@ -126,7 +126,7 @@ class Excel_to_py:
                     section_lf.append(int(res))
                 else:
                     section_lf.append('NA')
-                    
+
         return section_lf
 
     def return_lfprice(self):
@@ -139,7 +139,7 @@ class Excel_to_py:
                     section_lfprice.append(int(res))
                 else:
                     section_lfprice.append('NA')
-                
+
         return section_lfprice
 
     def return_section_details(self,num=0):
@@ -171,23 +171,23 @@ class Excel_to_py:
                 return 'dave'
             else:
                 return 'jag'
-    
+
 
 def write_proposal(customer_name,customer_company,contact_info,company_address,job_address,job_name,_bid_lf,_bid_lfprice):
     print('start making proposal...')
     etp = Excel_to_py(file,load_workbook(filename=file,data_only=True),'Write up')
-    
+
     #load estimate number
     est_num_file = open('estimate_number.txt','r+')
     estimate_number = int(est_num_file.read())
     est_num_file.close()
-    
+
     # Document Variables
     today = date.today()
     d1 = today.strftime("%m/%d/%Y")
     subtotal = 0
     total_info = [d1,customer_name,contact_info,customer_company,company_address,job_name,job_address]
-        
+
     #Document Setup
     document = Document()
     style = document.styles['Normal']
@@ -231,7 +231,7 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
     est_num = open('estimate_number.txt','w+')
     est_num.write(str(estimate_number + 1))
     est_num.close()
-    
+
     #head_info = document.add_paragraph()
     for item in total_info:
         document.add_paragraph(str(item))
@@ -239,7 +239,7 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
     document.add_paragraph('Dear ' + customer_name + ',\n')
     p1 = document.add_paragraph()
     p1.style = document.styles['Normal']
-    
+
     p1.add_run('Precision Rail of Oregon is pleased to provide the following proposal for: ')
     p1.add_run(job_name + ', BUDGET Rev-0 \n\n').bold = True
     p1.add_run('Items furnished by Precision Rail of Oregon: Submittal drawings, engineering, materials, and installation.\n\n').bold = True
@@ -251,19 +251,19 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
         if _bid_lf[num] != 'NA':
             bid_area =etp.return_area_name(num)
             section = etp.return_section_details(num)
-            b1 = return_description(section[0],section[1],section[2],section[3],section[4],section[5],section[6],section[7]) 
+            b1 = return_description(section[0],section[1],section[2],section[3],section[4],section[5],section[6],section[7])
             p1.add_run('Bid Item - {} Tall {} ({})\n'.format(b1[0],b1[7],bid_area)).bold = True
-            p1.add_run(" {} {}. {}, {} with {}. Posts spacing to be evenly spaced and not exceed {} as per engineering and customer request. Support blocking by others. Standard color (Black, Bronze, White). ".format(b1[1],b1[2],b1[3],b1[4],b1[5],b1[6]))    
+            p1.add_run(" {} {}. {}, {} with {}. Posts spacing to be evenly spaced and not exceed {} as per engineering and customer request. Support blocking by others. Standard color (Black, Bronze, White). ".format(b1[1],b1[2],b1[3],b1[4],b1[5],b1[6]))
             if b1[7] == 'Grab rail':
                 p1.add_run('Handrails are all ADA Compliant.')
             p1.add_run('\n\n')
-            p1.add_run('\t'*6 + 'Sub Total {} LF @ ${}.00 per LF = ${}.00*\n\n'.format(str(_bid_lf[num]),str(_bid_lfprice[num]),str(_bid_lf[num]*_bid_lfprice[num]))).bold = True
+            p1.add_run('\t'*6 + 'Total {} LF @ ${}.00 per LF = Sub Total ${}.00*\n\n'.format(str(_bid_lf[num]),str(_bid_lfprice[num]),str(_bid_lf[num]*_bid_lfprice[num]))).bold = True
             subtotal += _bid_lf[num] * _bid_lfprice[num]
 
     p1.add_run('\n'*3)
     p1.add_run('\t'*10 + '     Total = {}.00*\n\n\n'.format(str(subtotal))).bold = True
 
-    
+
     p1.add_run('\t\t*This price quote is valid for 3 months from the date of this document*\n\n').italic = True
 
     p1.add_run('Assumptions\n').bold = True
@@ -310,7 +310,7 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
         sign.add_run('Jeff Garlitz\n')
         sign.add_run('jgarlitz@precisionrail.com\n')
         sign.add_run('541-279-8182\n')
-        
+
     elif rep == 'dave':
         document.add_picture('Dave_signature.png', width=Inches(2))
         sign = document.add_paragraph()
@@ -318,15 +318,15 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
         sign.add_run('Dave Brown\n')
         sign.add_run('Dave@precisionrail.com\n')
         sign.add_run('503-793-1972\n')
-        
-   
+
+
     sign.add_run('\n\n\n\n')
     sign.add_run('Acceptance of Proposal Signature _______________________              Date_______________   ')
     document.save('{}_{} - rev 0.docx'.format(customer_company,job_name))
     print('proposal finished!')
 
 
-    
+
 def _start():
     print('proposal writer loaded...')
     os.chdir("C:/Users/Owner/Desktop/Estimating model 1.0.7.9")
@@ -335,7 +335,7 @@ def _start():
     customer_name,customer_company,contact_info,company_address,job_address,job_name = etp.return_variables()
     bid_lf = etp.return_lf()
     bid_lfprice = etp.return_lfprice()
-    
+
     write_proposal(customer_name,customer_company,contact_info,company_address,job_address,job_name,bid_lf,bid_lfprice)
 
 
@@ -345,7 +345,7 @@ def file_name():
     _path = askopenfilename(filetypes=[('Excel Files','*.xlsm')])
     print(_path)
     set_file(_path)
-    
+
 
 
 def get_cwd():
