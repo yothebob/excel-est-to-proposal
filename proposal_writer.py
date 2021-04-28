@@ -44,53 +44,66 @@ spacing = ['',"2'","3'","4'","5'","6'",'custom']
 
 rail_type = ['Picket Guardrail','Glass Guardrail','Cable Guardrail','Grab rail','custom']
 
+def record_custom(_input):
+    cust_file = open('custom_logs.txt','a')
+    cust_file.write('_input')
+    cust_file.close()
+
 
 def return_description(set_height,set_post,set_mount,set_top,set_bottom,set_infill,set_spacing,set_type):
     rail_description = []
     if rail_height[set_height] == 'custom':
         custom_height = input('Height: ')
+        record_custom(custom_height)
         rail_description.append(custom_height)
     else:
         rail_description.append(rail_height[set_height])
 
     if post_type[set_post] == 'custom':
         custom_post = input('post type: ')
+        record_custom(custom_post)
         rail_description.append(custom_post)
     else:
         rail_description.append(post_type[set_post])
 
     if mounting_detail[set_mount] == 'custom':
         custom_mount = input('mount/ GR line: ')
+        record_custom(custom_mount)
         rail_description.append(custom_mount)
     else:
         rail_description.append(mounting_detail[set_mount])
 
     if top_rail[set_top] == 'custom':
         custom_top = input('TR / GR mount: ')
+        record_custom(custom_top)
         rail_description.append(custom_top)
     else:
         rail_description.append(top_rail[set_top])
 
     if bottom_rail[set_bottom] == 'custom':
         custom_bottom = input('BR/ GR mount: ')
+        record_custom(custom_bottom)
         rail_description.append(custom_bottom)
     else:
         rail_description.append(bottom_rail[set_bottom])
 
     if infill[set_infill] == 'custom':
         custom_infill = input('infill / GR mount spec: ')
+        record_custom(custom_infill)
         rail_description.append(custom_infill)
     else:
         rail_description.append(infill[set_infill])
 
     if spacing[set_spacing] == 'custom':
         custom_spacing = input('spacing: ')
+        record_custom(custom_spacing)
         rail_description.append(custom_spacing)
     else:
         rail_description.append(spacing[set_spacing])
 
     if rail_type[set_type] == 'custom':
         custom_type = input('rail type: ')
+        record_custom(custom_type)
         rail_description.append(custom_type)
     else:
         rail_description.append(rail_type[set_type])
