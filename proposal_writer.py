@@ -46,7 +46,7 @@ rail_type = ['Picket Guardrail','Glass Guardrail','Cable Guardrail','Grab rail',
 
 def record_custom(_input):
     cust_file = open('custom_logs.txt','a')
-    cust_file.write('_input')
+    cust_file.write(_input,"\n")
     cust_file.close()
 
 
