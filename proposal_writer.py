@@ -23,7 +23,7 @@ def set_file(_file):
     print(file)
 
 estimate = []
-
+estimate_log = {}
 
 rail_height = ['36"','42"','34"-38"','custom']
 post_type = ['2-1/2 x 4" Base shoe','2-3/8" x 2-3/8" square aluminum posts', '2-3/8" x 2-3/8" Series 500 aluminum slotted Post','1.5" Sch 40','1.5" x 1.5" Square','1" x 2" Rectangular','custom' ]
@@ -43,6 +43,18 @@ infill = ['5/8" x 5/8" picket infill','1/4 laminated Tempered glass infill','3/8
 spacing = ['',"2'","3'","4'","5'","6'",'custom']
 
 rail_type = ['Picket Guardrail','Glass Guardrail','Cable Guardrail','Grab rail','custom']
+
+
+
+def search_estimates():
+    tag = input("what are you searching for? : ")
+    file = open('est.log.txt','r+')
+    for line in file:
+        if tag.lower() in line.lower():
+            res = re.findall(r"\d\d\d\d",line)
+            print('estimate number: ',res[0])
+
+
 
 def record_custom(_input):
     cust_file = open('custom_logs.txt','a')
@@ -126,7 +138,8 @@ class Excel_to_py:
         #note_sheet = workbook['Write up']
         for row in self.note_sheet.iter_rows(min_row=1,min_col=2,max_col=2,values_only=True):
             res = ''.join(map(str,row))
-            estimate.append(res)
+            if res != "None":
+                estimate.append(res)
         return estimate[0],estimate[1],estimate[2],estimate[3],estimate[4],estimate[5]
 
     def return_lf(self):
@@ -265,6 +278,7 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
             bid_area =etp.return_area_name(num)
             section = etp.return_section_details(num)
             b1 = return_description(section[0],section[1],section[2],section[3],section[4],section[5],section[6],section[7])
+            estimate.append(b1)
             p1.add_run('Bid Item - {} Tall {} ({})\n'.format(b1[0],b1[7],bid_area)).bold = True
             p1.add_run(" {} {}. {}, {} with {}. Posts spacing to be evenly spaced and not exceed {} as per engineering and customer request. Support blocking by others. Standard color (Black, Bronze, White). ".format(b1[1],b1[2],b1[3],b1[4],b1[5],b1[6]))
             if b1[7] == 'Grab rail':
@@ -332,7 +346,11 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
         sign.add_run('Dave@precisionrail.com\n')
         sign.add_run('503-793-1972\n')
 
-
+    estimate_log[estimate_number] = estimate
+    ff = open('est.log.txt','a')
+    ff.write(str(estimate_log) + '\n')
+    ff.close()
+    
     sign.add_run('\n\n\n\n')
     sign.add_run('Acceptance of Proposal Signature _______________________              Date_______________   ')
     document.save('{}_{} - rev 0.docx'.format(customer_company,job_name))
@@ -370,6 +388,8 @@ window.title(' Auto Proposal Writer')
 window.geometry('300x100')
 open_button = Button(master=window,width=20,text='Open File',command=file_name)
 run_button =Button(master=window,width=20,text='Make Proposal',command=_start)
+search_button = Button(master=window, width=15,text='Search Estimates',command= search_estimates)
 open_button.pack()
 run_button.pack()
+search_button.pack()
 window.mainloop()
