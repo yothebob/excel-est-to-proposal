@@ -58,7 +58,7 @@ def search_estimates():
 
 def record_custom(_input):
     cust_file = open('custom_logs.txt','a')
-    cust_file.write(_input,"\n")
+    cust_file.write(_input +"\n")
     cust_file.close()
 
 
