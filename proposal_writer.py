@@ -48,12 +48,23 @@ rail_type = ['Picket Guardrail','Glass Guardrail','Cable Guardrail','Grab rail',
 
 def search_estimates():
     tag = input("what are you searching for? : ")
+    word_list = tag.split(' ')
     file = open('est.log.txt','r+')
+    res_dict = {}
     for line in file:
-        if tag.lower() in line.lower():
-            res = re.findall(r"\d\d\d\d",line)
-            print('estimate number: ',res[0])
-
+        for word in word_list:
+            if word.lower() in line.lower():
+                res= re.findall(r"\d\d\d\d",line)
+                if word in res_dict:
+                    res_dict[word].append(res[0])
+                else:
+                    res_dict[word] = []
+                    res_dict[word].append(res[0])
+    for key in res_dict:
+        print('search tag:',"'",key,"'\n",'estimate numbers: ',res_dict[key],'\n')
+    if tag.lower() in line.lower():
+        res = re.findall(r"\d\d\d\d",line)
+        print('search tag: ',tag,'\nresults: ','estimate number: ',res[0],'\n')    
 
 
 def record_custom(_input):
