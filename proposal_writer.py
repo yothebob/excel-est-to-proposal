@@ -49,7 +49,7 @@ rail_type = ['Picket Guardrail','Glass Guardrail','Cable Guardrail','Grab rail',
 def search_estimates():
     tag = input("what are you searching for? : ")
     word_list = tag.split(' ')
-    file = open('est.log.txt','r+')
+    file = open('est_log.txt','r+')
     res_dict = {}
     for line in file:
         for word in word_list:
@@ -358,7 +358,7 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
         sign.add_run('503-793-1972\n')
 
     estimate_log[estimate_number] = estimate
-    ff = open('est.log.txt','a')
+    ff = open('est_log.txt','a')
     ff.write(str(estimate_log) + '\n')
     ff.close()
     
