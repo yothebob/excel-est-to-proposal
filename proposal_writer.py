@@ -47,6 +47,7 @@ rail_type = ['Picket Guardrail','Glass Guardrail','Cable Guardrail','Grab rail',
 
 
 def search_estimates():
+    #sys.path.append('C:/Users/Owner/Desktop/Estimating model 1.0.7.9')
     tag = input("what are you searching for? : ")
     word_list = tag.split(' ')
     file = open('est_log.txt','r+')
