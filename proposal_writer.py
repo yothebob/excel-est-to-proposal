@@ -47,12 +47,22 @@ rail_type = ['Picket Guardrail','Glass Guardrail','Cable Guardrail','Grab rail',
 
 
 def search_estimates():
+    os.chdir('C:/Users/Owner/Desktop/Estimating model 1.0.7.9')
     tag = input("what are you searching for? : ")
-    file = open('est.log.txt','r+')
+    word_list = tag.split(' ')
+    file = open('est_log.txt','r+')
+    res_dict = {}
     for line in file:
-        if tag.lower() in line.lower():
-            res = re.findall(r"\d\d\d\d",line)
-            print('estimate number: ',res[0])
+        for word in word_list:
+            if word.lower() in line.lower():
+                res = re.findall(r"\d\d\d\d?\d",line)
+                if word in res_dict:
+                    res_dict[word].append(res[0])
+                else:
+                    res_dict[word] = []
+                    res_dict[word].append(res[0])
+    for key in res_dict:
+        print('Search Tag:',"'",key,"'\n",'Estimate Numbers: ',res_dict[key],'\n')
 
 
 def return_description(set_height,set_post,set_mount,set_top,set_bottom,set_infill,set_spacing,set_type):
@@ -332,7 +342,7 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
         
     #save estimate to estimate log
     estimate_log[estimate_number] = estimate
-    ff = open('est.log.txt','a')
+    ff = open('est_log.txt','a')
     ff.write(str(estimate_log) +'\n')
     ff.close()
     
