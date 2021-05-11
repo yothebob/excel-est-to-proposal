@@ -47,7 +47,7 @@ rail_type = ['Picket Guardrail','Glass Guardrail','Cable Guardrail','Grab rail',
 
 
 def search_estimates():
-    #sys.path.append('C:/Users/Owner/Desktop/Estimating model 1.0.7.9')
+    os.chdir("C:/Users/Owner/Desktop/Estimating model 1.0.7.9")
     tag = input("what are you searching for? : ")
     word_list = tag.split(' ')
     file = open('est_log.txt','r+')
@@ -55,7 +55,7 @@ def search_estimates():
     for line in file:
         for word in word_list:
             if word.lower() in line.lower():
-                res= re.findall(r"\d\d\d\d",line)
+                res= re.findall(r"\d\d\d\d?\d",line)
                 if word in res_dict:
                     res_dict[word].append(res[0])
                 else:
@@ -64,7 +64,7 @@ def search_estimates():
     for key in res_dict:
         print('search tag:',"'",key,"'\n",'estimate numbers: ',res_dict[key],'\n')
     if tag.lower() in line.lower():
-        res = re.findall(r"\d\d\d\d",line)
+        res = re.findall(r"\d\d\d\d?\d",line)
         print('search tag: ',tag,'\nresults: ','estimate number: ',res[0],'\n')    
 
 
