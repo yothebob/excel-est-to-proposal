@@ -279,7 +279,7 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
     p1.style = document.styles['Normal']
 
     p1.add_run('Precision Rail of Oregon is pleased to provide the following proposal for: ')
-    p1.add_run(job_name + ', BUDGET Rev-0 \n\n').bold = True
+    p1.add_run(job_name + ', Budget Rev-0 \n\n').bold = True
     p1.add_run('Items furnished by Precision Rail of Oregon: Submittal drawings, engineering, materials, and installation.\n\n').bold = True
     p1.add_run('Submittals:').bold = True
     p1.add_run(' Pricing includes 1 submittal based off plans and 1 revision once corrections are received from GC. Any Additional revisions to be billed at 145.00 per hour plus materials and handling. \n\n')
@@ -296,14 +296,14 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
             if b1[7] == 'Grab rail':
                 p1.add_run('Handrails are all ADA Compliant.')
             p1.add_run('\n\n')
-            p1.add_run('\t'*6 + 'Total {} LF @ ${}.00 per LF = Sub Total ${}.00*\n\n'.format(str(_bid_lf[num]),str(_bid_lfprice[num]),str(_bid_lf[num]*_bid_lfprice[num]))).bold = True
+            p1.add_run('\t'*6 + 'Total {} LF @ ${}.00 per LF = ${}.00*\n\n'.format(str(_bid_lf[num]),str(_bid_lfprice[num]),str(_bid_lf[num]*_bid_lfprice[num]))).bold = True
             subtotal += _bid_lf[num] * _bid_lfprice[num]
 
     p1.add_run('\n'*3)
     p1.add_run('\t'*10 + '     Total = {}.00*\n\n\n'.format(str(subtotal))).bold = True
 
 
-    p1.add_run('\t\t*This price quote is valid for 3 months from the date of this document*\n\n').italic = True
+    p1.add_run('\t\t*This price quote is valid for 30 days from the date of this document*\n\n').italic = True
 
     p1.add_run('Assumptions\n').bold = True
     p1.add_run('The following assumptions were made in support of this estimate:')
