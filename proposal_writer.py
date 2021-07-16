@@ -339,7 +339,7 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
         sign.add_run('541-279-8182\n')
         
     elif rep == 'dave':
-        document.add_picture('Dave_signature.png', width=Inches(2))
+        document.add_picture('Dave_signature.png')
         sign = document.add_paragraph()
         sign.style = document.styles['Normal']
         sign.add_run('Dave Brown\n')
