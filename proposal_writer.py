@@ -13,7 +13,7 @@ import re
 
 print('excel to py file loaded...')
 
-#sys.path.append('C:\Users\Owner\Desktop\Estimating model 1.0.7.9')
+sys.path.append('C:/Users/Owner/Desktop/Estimating model 1.0.7.9')
 
 #set global file name
 file = ''
@@ -330,8 +330,10 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
 
     #rep signing
     rep = etp.return_rep()
+    print(rep)
     if rep == 'jag':
-        document.add_picture('JAG_signature.png', width=Inches(2))
+        document.add_picture('JAG_signature.png',width=Inches(2))
+        document.add_picture('JAG_signature.png',width=Inches(2))
         sign = document.add_paragraph()
         sign.style = document.styles['Normal']
         sign.add_run('Jeff Garlitz\n')
@@ -339,7 +341,8 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
         sign.add_run('541-279-8182\n')
         
     elif rep == 'dave':
-        document.add_picture('Dave_signature.png')
+        document.add_picture('Dave_signature.png',width=Inches(2))
+        document.add_picture('Dave_signature.png',width=Inches(2))
         sign = document.add_paragraph()
         sign.style = document.styles['Normal']
         sign.add_run('Dave Brown\n')
