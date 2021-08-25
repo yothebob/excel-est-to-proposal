@@ -8,12 +8,12 @@ import os
 from openpyxl import Workbook
 from openpyxl import load_workbook
 import re
-
+from proposal_log import WriteToLog
 
 
 print('excel to py file loaded...')
 
-#sys.path.append('C:\Users\Owner\Desktop\Estimating model 1.0.7.9')
+sys.path.append('C:/Users/Owner/Desktop/Estimating model 1.0.7.9')
 
 #set global file name
 file = ''
@@ -22,7 +22,8 @@ def set_file(_file):
     file = _file
     print(file)
 
-estimate_log = {}
+
+estimate = []
 
 #Phrases used in proposal
 rail_height = ['36"','42"','34"-38"','custom']
@@ -50,6 +51,8 @@ def search_estimates():
         - prints results for full search term, and split words. 
     '''
     os.chdir('C:/Users/Owner/Desktop/Estimating model 1.0.7.9')
+
+    
     tag = input("what are you searching for? : ")
     word_list = tag.split(' ')
     file = open('est_log.txt','r+')
@@ -57,24 +60,89 @@ def search_estimates():
     for line in file:
         for word in word_list:
             if word.lower() in line.lower():
+
                 res = re.findall(r"\d\d\d\d?\d",line)
+
                 if word in res_dict:
                     res_dict[word].append(res[0])
                 else:
                     res_dict[word] = []
                     res_dict[word].append(res[0])
     for key in res_dict:
-        print('Search Tag:',"'",key,"'\n",'Estimate Numbers: ',res_dict[key],'\n')
+
+        print('search tag:',"'",key,"'\n",'estimate numbers: ',res_dict[key],'\n')
+    if tag.lower() in line.lower():
+        res = re.findall(r"\d\d\d\d?\d",line)
+        print('search tag: ',tag,'\nresults: ','estimate number: ',res[0],'\n')
 
 
-def append_description(number,list_to_append,description_list,input_string):
-    #generic function for return description to append phrase to list or ask for user input
-    if description_list[number] == "custom":
-        user_input = input(f"Need input for {input_string}")
-        list_to_append.append(user_input)
+def record_custom(_input):
+    cust_file = open('custom_logs.txt','a')
+    cust_file.write(_input +"\n")
+    cust_file.close()
+
+
+def return_description(set_height,set_post,set_mount,set_top,set_bottom,set_infill,set_spacing,set_type):
+    rail_description = []
+    if rail_height[set_height] == 'custom':
+        custom_height = input('Height: ')
+        record_custom(custom_height)
+        rail_description.append(custom_height)
     else:
-        list_to_append.append(description_list[number])
+        rail_description.append(rail_height[set_height])
 
+    if post_type[set_post] == 'custom':
+        custom_post = input('post type: ')
+        record_custom(custom_post)
+        rail_description.append(custom_post)
+    else:
+        rail_description.append(post_type[set_post])
+
+    if mounting_detail[set_mount] == 'custom':
+        custom_mount = input('mount/ GR line: ')
+        record_custom(custom_mount)
+        rail_description.append(custom_mount)
+    else:
+        rail_description.append(mounting_detail[set_mount])
+
+    if top_rail[set_top] == 'custom':
+        custom_top = input('TR / GR mount: ')
+        record_custom(custom_top)
+        rail_description.append(custom_top)
+    else:
+        rail_description.append(top_rail[set_top])
+
+    if bottom_rail[set_bottom] == 'custom':
+        custom_bottom = input('BR/ GR mount: ')
+        record_custom(custom_bottom)
+        rail_description.append(custom_bottom)
+    else:
+        rail_description.append(bottom_rail[set_bottom])
+
+    if infill[set_infill] == 'custom':
+        custom_infill = input('infill / GR mount spec: ')
+        record_custom(custom_infill)
+        rail_description.append(custom_infill)
+    else:
+        rail_description.append(infill[set_infill])
+
+    if spacing[set_spacing] == 'custom':
+        custom_spacing = input('spacing: ')
+        record_custom(custom_spacing)
+        rail_description.append(custom_spacing)
+    else:
+        rail_description.append(spacing[set_spacing])
+
+    if rail_type[set_type] == 'custom':
+        custom_type = input('rail type: ')
+        record_custom(custom_type)
+        rail_description.append(custom_type)
+    else:
+        rail_description.append(rail_type[set_type])
+
+    return rail_description
+
+     
 
 def return_description(set_height,set_post_type,set_mount_type,set_toprail,set_bottomrail,set_infill,set_spacing,set_type):
     #takes index numbers and returns a list of phrases
@@ -92,26 +160,25 @@ def return_description(set_height,set_post_type,set_mount_type,set_toprail,set_b
 
 
 class Excel_to_py:
-    # object used to interface with excel estimating model
+
 
     def __init__(self,file,workbook,note_sheet):
         self.file = file
         self.workbook = workbook
         note_sheet = workbook[note_sheet]
-        self.note_sheet = note_sheet
 
-    def return_job_info(self):
-        #return customer info
-        job_info = {}
-        info_order = ['customer_name','company_name','contact_info','business_address','job_address','job_name']
-        i = 0
+        self.note_sheet = note_sheet#workbook['Write up']
+
+    def return_variables(self):
+        #workbook = load_workbook(filename=file,data_only=True)
+        #note_sheet = workbook['Write up']
         for row in self.note_sheet.iter_rows(min_row=1,min_col=2,max_col=2,values_only=True):
             res = ''.join(map(str,row))
-            if res != 'None' and i < 6:
-                job_info[info_order[i]] = res
-                i += 1
-        return job_info
+            if res != "None":
+                estimate.append(res)
+        return estimate[0],estimate[1],estimate[2],estimate[3],estimate[4],estimate[5]
 
+      
     def return_lf(self):
         #return LF for each section
         section_lf= []
@@ -122,7 +189,7 @@ class Excel_to_py:
                     res = round(float(res),0)
                     section_lf.append(int(res))
                 else:
-                    section_lf.append('NA')          
+                    section_lf.append('NA')
         return section_lf
 
     def return_lfprice(self):
@@ -135,7 +202,8 @@ class Excel_to_py:
                     res = round(float(res),0)
                     section_lfprice.append(int(res))
                 else:
-                    section_lfprice.append('NA') 
+                    section_lfprice.append('NA')
+
         return section_lfprice
 
     def return_section_details(self,num=0):
@@ -170,29 +238,22 @@ class Excel_to_py:
                 return 'dave'
             else:
                 return 'jag'
-    
+
 
 def write_proposal(instance):
     print('start making proposal...')
-    #getting instance values for job lf and lf prices, rep
-    bid_lf = instance.return_lf()
-    bid_lfprice = instance.return_lfprice()
-    job_info = instance.return_job_info()
-    rep = instance.return_rep()
-    estimate_total = 0
-
-    #for saving to est_log
-    estimate_details = []
-    
+    etp = Excel_to_py(file,load_workbook(filename=file,data_only=True),'Write up')
     #load estimate number
     est_num_file = open('estimate_number.txt','r+')
     estimate_number = int(est_num_file.read())
     est_num_file.close()
-    
+
     # Document Variables
     today = date.today()
-    todays_date = today.strftime("%m/%d/%Y")
-        
+    d1 = today.strftime("%m/%d/%Y")
+    subtotal = 0
+    total_info = [d1,customer_name,contact_info,customer_company,company_address,job_name,job_address]
+
     #Document Setup
     document = Document()
     style = document.styles['Normal']
@@ -233,48 +294,45 @@ def write_proposal(instance):
     # start Document
     est =document.add_paragraph()
     est.add_run('\t'*10 + 'Estimate #: {}-C'.format(estimate_number)).bold=True
-    
-    #customer/job info
-    for item in job_info.keys():
-        estimate_details.append(job_info[item])
-        document.add_paragraph(str(job_info[item]))
+    est_num = open('estimate_number.txt','w+')
+    est_num.write(str(estimate_number + 1))
+    est_num.close()
+
+    #head_info
+    for item in total_info:
+        document.add_paragraph(str(item))
     document.add_paragraph('')
     
     document.add_paragraph('Dear ' + job_info['customer_name'] + ',\n')
     p1 = document.add_paragraph()
     p1.style = document.styles['Normal']
-    
+
     p1.add_run('Precision Rail of Oregon is pleased to provide the following proposal for: ')
-    p1.add_run(job_info['job_name'] + ', BUDGET Rev-0 \n\n').bold = True
+    p1.add_run(job_name + ', Budget Rev-0 \n\n').bold = True
     p1.add_run('Items furnished by Precision Rail of Oregon: Submittal drawings, engineering, materials, and installation.\n\n').bold = True
     p1.add_run('Submittals:').bold = True
     p1.add_run(' Pricing includes 1 submittal based off plans and 1 revision once corrections are received from GC. Any Additional revisions to be billed at 145.00 per hour plus materials and handling. \n\n')
 
-    #section write up
-    for num in range(len(bid_lf)):
 
-        ''' for each area, if its lf != NA...
-            - find area name, find section decriptions,append to estimate, '''
-        
-        if bid_lf[num] != 'NA':
-            bid_area_total = bid_lf[num] * bid_lfprice[num]
-            bid_area_name = instance.return_area_name(num)
-            section_index_array = instance.return_section_details(num)
-            finished_descriptions = return_description(section_index_array[0],section_index_array[1],section_index_array[2],section_index_array[3],
-            section_index_array[4],section_index_array[5],section_index_array[6],section_index_array[7]) 
-            estimate_details.append(finished_descriptions)
-            p1.add_run(f"Bid Item - {finished_descriptions[0]} Tall {finished_descriptions[7]} ({bid_area_name})\n").bold = True
-            p1.add_run(" {} {}. {}, {} with {}. Posts spacing to be evenly spaced and not exceed {} as per engineering and customer request. Support blocking by others. Standard color (Black, Bronze, White). ".format(finished_descriptions[1],finished_descriptions[2],
-                                                                                                                                                                                                                         finished_descriptions[3],finished_descriptions[4],finished_descriptions[5],finished_descriptions[6]))    
-            if finished_descriptions[7] == 'Grab rail':
+    #sections
+    for num in range(len(_bid_lf)):
+        if _bid_lf[num] != 'NA':
+            bid_area =etp.return_area_name(num)
+            section = etp.return_section_details(num)
+            b1 = return_description(section[0],section[1],section[2],section[3],section[4],section[5],section[6],section[7])
+            estimate.append(b1)
+            p1.add_run('Bid Item - {} Tall {} ({})\n'.format(b1[0],b1[7],bid_area)).bold = True
+            p1.add_run(" {} {}. {}, {} with {}. Posts spacing to be evenly spaced and not exceed {} as per engineering and customer request. Support blocking by others. Standard color (Black, Bronze, White). ".format(b1[1],b1[2],b1[3],b1[4],b1[5],b1[6]))
+            if b1[7] == 'Grab rail':
                 p1.add_run('Handrails are all ADA Compliant.')
             p1.add_run('\n\n')
-            p1.add_run('\t'*6 + 'Sub Total {} LF @ ${}.00 per LF = ${}.00*\n\n'.format(str(bid_lf[num]),str(bid_lfprice[num]),str(bid_area_total))).bold = True
-            estimate_total += bid_area_total
+            p1.add_run('\t'*6 + 'Total {} LF @ ${}.00 per LF = ${}.00*\n\n'.format(str(_bid_lf[num]),str(_bid_lfprice[num]),str(_bid_lf[num]*_bid_lfprice[num]))).bold = True
+            subtotal += _bid_lf[num] * _bid_lfprice[num]
 
     #price total
     p1.add_run('\n'*3)
-    p1.add_run('\t'*10 + '     Total = {}.00*\n\n\n'.format(str(estimate_total))).bold = True
+
+    p1.add_run('\t'*10 + '     Total = {}.00*\n\n\n'.format(str(subtotal))).bold = True
     p1.add_run('\t\t*This price quote is valid for 30 days from the date of this document*\n\n').italic = True
 
     #typical Assumptions and exclusions for contract
@@ -323,7 +381,7 @@ def write_proposal(instance):
         sign.add_run('Jeff Garlitz\n')
         sign.add_run('jgarlitz@precisionrail.com\n')
         sign.add_run('541-279-8182\n')
-        
+
     elif rep == 'dave':
         document.add_picture('Dave_signature.png', width=Inches(2))
         document.add_picture('Dave_signature.png', width=Inches(2))
@@ -332,17 +390,19 @@ def write_proposal(instance):
         sign.add_run('Dave Brown\n')
         sign.add_run('Dave@precisionrail.com\n')
         sign.add_run('503-793-1972\n')
-        
-    #save estimate to estimate log
-    estimate_log[estimate_number] = estimate_details
+
+
+    estimate_log[estimate_number] = estimate
     ff = open('est_log.txt','a')
-    ff.write(str(estimate_log) +'\n')
+    ff.write(str(estimate_log) + '\n')
     ff.close()
-    
+
     sign.add_run('\n\n\n\n')
     sign.add_run('Acceptance of Proposal Signature _______________________              Date_______________   ')
-    cwd = get_cwd()
-    document.save('{}_{} - rev 0.docx'.format(job_info['company_name'],job_info['job_name']))
+    document.save('{}_{} - rev 0.docx'.format(customer_company,job_name))
+
+    save_to_log = WriteToLog("G:/My Drive/Sales & Operations/1-Commercial Projects/Estimating/Estimate Model",estimate_log)
+    save_to_log.write_to_log()
 
     #increment estimate number
     est_num = open('estimate_number.txt','w+')
@@ -351,17 +411,17 @@ def write_proposal(instance):
     
     print('proposal finished!')
 
-    
 
-def make_proposal():
-    # create a proposal
+def _start():
     print('proposal writer loaded...')
+    os.chdir("C:/Users/Owner/Desktop/Estimating model 1.0.7.9")
+    print(os.getcwd())
     etp = Excel_to_py(file,load_workbook(filename=file,data_only=True),'Write up')
     write_proposal(etp)
 
 
 def file_name():
-    #open file (.xlsm)
+    print(os.getcwd())
     _path = askopenfilename(filetypes=[('Excel Files','*.xlsm')])
     print(_path)
     set_file(_path)
@@ -371,18 +431,14 @@ def get_cwd():
     cwd = os.getcwd()
     return cwd
 
-def create_gui():
-    #create tkinter gui for app
-    window = Tk()
-    window.title(' Auto Proposal Writer')
-    window.geometry('300x100')
-    open_button = Button(master=window,width=20,text='Open File',command=file_name)
-    run_button =Button(master=window,width=20,text='Make Proposal',command=make_proposal)
-    search_button = Button(master=window,width =15, text='search estimates',command = search_estimates)
-    open_button.pack()
-    run_button.pack()
-    search_button.pack()
-    window.mainloop()
 
-if __name__ == '__main__':
-    create_gui()
+window = Tk()
+window.title(' Auto Proposal Writer')
+window.geometry('300x100')
+open_button = Button(master=window,width=20,text='Open File',command=file_name)
+run_button =Button(master=window,width=20,text='Make Proposal',command=_start)
+search_button = Button(master=window, width=15,text='Search Estimates',command= search_estimates)
+open_button.pack()
+run_button.pack()
+search_button.pack()
+window.mainloop()
