@@ -367,7 +367,7 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
     sign.add_run('Acceptance of Proposal Signature _______________________              Date_______________   ')
     document.save('{}_{} - rev 0.docx'.format(customer_company,job_name))
 
-    save_to_log = WriteToLog("C:/Users/Owner/Desktop/Estimating model 1.0.7.9",estimate_log)
+    save_to_log = WriteToLog("G:/My Drive/Sales & Operations/1-Commercial Projects/Estimating/Estimate Model",estimate_log)
     save_to_log.write_to_log()
 
 

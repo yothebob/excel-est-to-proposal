@@ -16,8 +16,8 @@ class WriteToLog:
         self.data = data
 
     def write_to_log(self):
-        #sys.path.append(self.filepath)
-        #os.chdir(self.filepath)
+        sys.path.append(self.filepath)
+        os.chdir(self.filepath)
         workbook = load_workbook(filename=self.filename, data_only=True)
         proposal_log = workbook.active
 
