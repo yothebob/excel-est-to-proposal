@@ -8,7 +8,7 @@ import os
 from openpyxl import Workbook
 from openpyxl import load_workbook
 import re
-
+from proposal_log import WriteToLog
 
 
 print('excel to py file loaded...')
@@ -65,7 +65,7 @@ def search_estimates():
         print('search tag:',"'",key,"'\n",'estimate numbers: ',res_dict[key],'\n')
     if tag.lower() in line.lower():
         res = re.findall(r"\d\d\d\d?\d",line)
-        print('search tag: ',tag,'\nresults: ','estimate number: ',res[0],'\n')    
+        print('search tag: ',tag,'\nresults: ','estimate number: ',res[0],'\n')
 
 
 def record_custom(_input):
@@ -270,7 +270,7 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
     est_num.write(str(estimate_number + 1))
     est_num.close()
 
-    #head_info = document.add_paragraph()
+    #head_info
     for item in total_info:
         document.add_paragraph(str(item))
     document.add_paragraph('')
@@ -362,10 +362,15 @@ def write_proposal(customer_name,customer_company,contact_info,company_address,j
     ff = open('est_log.txt','a')
     ff.write(str(estimate_log) + '\n')
     ff.close()
-    
+
     sign.add_run('\n\n\n\n')
     sign.add_run('Acceptance of Proposal Signature _______________________              Date_______________   ')
     document.save('{}_{} - rev 0.docx'.format(customer_company,job_name))
+
+    save_to_log = WriteToLog("C:/Users/Owner/Desktop/Estimating model 1.0.7.9",estimate_log)
+    save_to_log.write_to_log()
+
+
     print('proposal finished!')
 
 
