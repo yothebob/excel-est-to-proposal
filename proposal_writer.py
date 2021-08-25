@@ -8,7 +8,7 @@ import os
 from openpyxl import Workbook
 from openpyxl import load_workbook
 import re
-from proposal_log import WriteToLog
+from proposal_log import write_to_log
 
 
 print('excel to py file loaded...')
@@ -48,11 +48,11 @@ rail_type = ['Picket Guardrail','Glass Guardrail','Cable Guardrail','Grab rail',
 
 def search_estimates():
     '''search feature for estimate archive (est_log.txt)
-        - prints results for full search term, and split words. 
+        - prints results for full search term, and split words.
     '''
     os.chdir('C:/Users/Owner/Desktop/Estimating model 1.0.7.9')
 
-    
+
     tag = input("what are you searching for? : ")
     word_list = tag.split(' ')
     file = open('est_log.txt','r+')
@@ -142,7 +142,7 @@ def return_description(set_height,set_post,set_mount,set_top,set_bottom,set_infi
 
     return rail_description
 
-     
+
 
 def return_description(set_height,set_post_type,set_mount_type,set_toprail,set_bottomrail,set_infill,set_spacing,set_type):
     #takes index numbers and returns a list of phrases
@@ -178,7 +178,7 @@ class Excel_to_py:
                 estimate.append(res)
         return estimate[0],estimate[1],estimate[2],estimate[3],estimate[4],estimate[5]
 
-      
+
     def return_lf(self):
         #return LF for each section
         section_lf= []
@@ -227,7 +227,7 @@ class Excel_to_py:
                 return area_name
             else:
                 return 'None'
-     
+
     def return_rep(self):
         # return Salesman
         for row in self.note_sheet.iter_rows(min_row=13,max_row=13,min_col=2,max_col=2,values_only=True):
@@ -302,7 +302,7 @@ def write_proposal(instance):
     for item in total_info:
         document.add_paragraph(str(item))
     document.add_paragraph('')
-    
+
     document.add_paragraph('Dear ' + job_info['customer_name'] + ',\n')
     p1 = document.add_paragraph()
     p1.style = document.styles['Normal']
@@ -401,14 +401,13 @@ def write_proposal(instance):
     sign.add_run('Acceptance of Proposal Signature _______________________              Date_______________   ')
     document.save('{}_{} - rev 0.docx'.format(customer_company,job_name))
 
-    save_to_log = WriteToLog("G:/My Drive/Sales & Operations/1-Commercial Projects/Estimating/Estimate Model",estimate_log)
-    save_to_log.write_to_log()
+    save_to_log.write_to_log("C:/Users/Owner/Desktop/Estimating model 1.0.7.9",estimate_log)
 
     #increment estimate number
     est_num = open('estimate_number.txt','w+')
     est_num.write(str(estimate_number + 1))
     est_num.close()
-    
+
     print('proposal finished!')
 
 
